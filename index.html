@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Warung Nusantara</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #faf8f3;
+      --card: #ffffff;
+      --text: #2c2416;
+      --muted: #6b5d4f;
+      --border: #e2d9cd;
+      --red: #b5311a;
+      --orange: #d4611c;
+    }
+
+    body.dark {
+      --bg: #1c1510;
+      --card: #28200f;
+      --text: #f0e8d8;
+      --muted: #a89070;
+      --border: #3a2e20;
+      --red: #d94f35;
+      --orange: #e07830;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background .3s, color .3s;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 99;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 32px;
+      height: 56px;
+    }
+
+    .logo {
+      font-family: 'Merriweather', serif;
+      font-size: 1.1rem;
+      color: var(--red);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--muted);
+      transition: color .2s;
+    }
+
+    .nav-links a.active,
+    .nav-links a:hover {
+      color: var(--red);
+    }
+
+    .dark-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 0.8rem;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text);
+      transition: background .2s;
+    }
+    .dark-btn:hover { background: var(--border); }
+
+    /* HERO */
+    #hero {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      padding: 72px 80px;
+      min-height: 88vh;
+    }
+
+    .hero-text { flex: 1; }
+
+    .hero-text small {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 14px;
+    }
+
+    .hero-text h1 {
+      font-family: 'Merriweather', serif;
+      font-size: clamp(2rem, 4.5vw, 3.6rem);
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+
+    .hero-text h1 span { color: var(--red); }
+
+    .hero-text p {
+      font-size: 0.97rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 420px;
+      margin-bottom: 32px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--orange); transform: translateY(-2px); }
+
+    .hero-right {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .food-tile {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+      transition: transform .2s;
+    }
+    .food-tile:hover { transform: translateY(-3px); }
+    .food-tile .emoji { font-size: 2.8rem; display: block; margin-bottom: 8px; }
+    .food-tile span { font-size: 0.82rem; font-weight: 700; color: var(--muted); }
+    .food-tile:first-child { margin-top: 24px; }
+    .food-tile:nth-child(3) { margin-top: -20px; }
+
+    /* ABOUT */
+    #about {
+      padding: 80px 80px;
+      border-top: 1px solid var(--border);
+    }
+
+    .sec-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 8px;
+    }
+
+    .sec-title {
+      font-family: 'Merriweather', serif;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .sec-line {
+      width: 40px;
+      height: 3px;
+      background: var(--red);
+      border-radius: 2px;
+      margin-bottom: 40px;
+    }
+
+    .about-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .about-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 20px;
+    }
+
+    .about-item .icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .about-item h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .about-item p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; }
+
+    /* MENU */
+    #menu {
+      padding: 80px 80px;
+      border-top: 1px solid var(--border);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .menu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    .menu-thumb {
+      background: #f5e8d8;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+
+    body.dark .menu-thumb { background: #3a2710; }
+
+    .menu-info { padding: 16px; }
+    .menu-info h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+    .menu-info p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+
+    .menu-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: #fdebd8;
+      color: #a04a10;
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+
+    body.dark .badge { background: #3d2510; color: #d9844a; }
+
+    .price { font-weight: 700; font-size: 0.88rem; color: var(--red); }
+
+    /* CONTACT */
+    #contact {
+      padding: 80px 80px;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-wrap {
+      max-width: 520px;
+    }
+
+    .form-row { margin-bottom: 16px; }
+    .form-row label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 5px; }
+
+    .form-row input,
+    .form-row textarea {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.88rem;
+      background: var(--card);
+      color: var(--text);
+      transition: border-color .2s;
+    }
+
+    .form-row input:focus,
+    .form-row textarea:focus {
+      outline: none;
+      border-color: var(--red);
+    }
+
+    .form-row textarea { resize: vertical; min-height: 100px; }
+
+    .err { font-size: 0.78rem; color: #c0392b; margin-top: 4px; display: none; }
+    .input-err { border-color: #c0392b !important; }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      padding: 13px;
+      border-radius: 8px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-submit:hover { background: var(--orange); }
+
+    .success {
+      display: none;
+      background: #eaf7ee;
+      color: #1d7a3a;
+      border: 1px solid #b5dfc1;
+      border-radius: 8px;
+      padding: 13px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 14px;
+    }
+
+    body.dark .success { background: #0e2e18; color: #5dba78; border-color: #1d5c30; }
+
+    /* FOOTER */
+    footer {
+      background: var(--text);
+      color: var(--bg);
+      text-align: center;
+      padding: 26px 20px;
+      font-size: 0.83rem;
+    }
+
+    footer span { opacity: 0.55; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      #hero { flex-direction: column; padding: 50px 24px; gap: 36px; }
+      .hero-right { grid-template-columns: 1fr 1fr; }
+      #about, #menu, #contact { padding: 60px 24px; }
+      nav { padding: 0 18px; }
+      .nav-links { gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Warung Nusantara</div>
+  <ul class="nav-links">
+    <li><a href="#hero" class="active">Home</a></li>
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#contact">Kontak</a></li>
+  </ul>
+  <button class="dark-btn" id="darkBtn">Mode Gelap</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-text">
+    <small>Masakan Khas Indonesia</small>
+    <h1>Rasa Autentik<br/>dari <span>Seluruh</span><br/>Nusantara</h1>
+    <p>Kami menyajikan masakan tradisional Indonesia dengan bahan segar pilihan dan resep turun-temurun yang tetap terjaga keasliannya.</p>
+    <a href="#menu" class="btn-primary">Lihat Menu Kami</a>
+  </div>
+  <div class="hero-right">
+    <div class="food-tile"><span class="emoji">🍲</span><span>Rendang</span></div>
+    <div class="food-tile"><span class="emoji">🍜</span><span>Mie Aceh</span></div>
+    <div class="food-tile"><span class="emoji">🥘</span><span>Soto Betawi</span></div>
+    <div class="food-tile"><span class="emoji">🍗</span><span>Ayam Betutu</span></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-label">Tentang Kami</div>
+  <h2 class="sec-title">Kenapa Pilih Warung Nusantara?</h2>
+  <div class="sec-line"></div>
+  <div class="about-row">
+    <div class="about-item">
+      <div class="icon">🌿</div>
+      <h3>Bahan Segar Lokal</h3>
+      <p>Semua bahan kami ambil dari pasar lokal setiap pagi. Tidak ada bahan beku, semua fresh.</p>
+    </div>
+    <div class="about-item">
+      <div class="icon">📜</div>
+      <h3>Resep Turun-temurun</h3>
+      <p>Setiap masakan dibuat berdasarkan resep asli dari daerah masing-masing, tidak dimodifikasi.</p>
+    </div>
+    <div class="about-item">
+      <div class="icon">🚴</div>
+      <h3>Pengiriman Cepat</h3>
+      <p>Pesan sekarang, dikirim dalam 30 menit ke lokasi kamu. Dijamin masih panas sampai di tangan.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="sec-label">Menu Pilihan</div>
+  <h2 class="sec-title">Makanan Andalan</h2>
+  <div class="sec-line"></div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="menu-thumb">🍲</div>
+      <div class="menu-info">
+        <h3>Rendang Padang</h3>
+        <p>Daging sapi empuk dimasak berjam-jam dalam santan dan rempah khas Minangkabau.</p>
+        <div class="menu-foot">
+          <span class="badge">Sumatera Barat</span>
+          <span class="price">Rp 35.000</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-thumb">🍜</div>
+      <div class="menu-info">
+        <h3>Mie Aceh</h3>
+        <p>Mie kuning tebal dengan kuah kari kental, topping udang dan irisan daging sapi.</p>
+        <div class="menu-foot">
+          <span class="badge">Aceh</span>
+          <span class="price">Rp 28.000</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-thumb">🥘</div>
+      <div class="menu-info">
+        <h3>Soto Betawi</h3>
+        <p>Kuah santan kental gurih dengan isian daging, tomat, dan kerupuk emping.</p>
+        <div class="menu-foot">
+          <span class="badge">Jakarta</span>
+          <span class="price">Rp 25.000</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-thumb">🍗</div>
+      <div class="menu-info">
+        <h3>Ayam Betutu</h3>
+        <p>Ayam utuh diisi bumbu base genep lalu dibakar lambat hingga bumbu meresap ke dalam.</p>
+        <div class="menu-foot">
+          <span class="badge">Bali</span>
+          <span class="price">Rp 32.000</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-thumb">🍱</div>
+      <div class="menu-info">
+        <h3>Nasi Kuning Manado</h3>
+        <p>Nasi kunyit wangi dilengkapi cakalang fufu, perkedel jagung, dan sambal dabu-dabu.</p>
+        <div class="menu-foot">
+          <span class="badge">Sulawesi Utara</span>
+          <span class="price">Rp 27.000</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-thumb">🫕</div>
+      <div class="menu-info">
+        <h3>Papeda Kuah Kuning</h3>
+        <p>Sagu khas Papua disantap bersama ikan tongkol dalam kuah kuning rempah segar.</p>
+        <div class="menu-foot">
+          <span class="badge">Papua</span>
+          <span class="price">Rp 30.000</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-label">Kontak</div>
+  <h2 class="sec-title">Hubungi Kami</h2>
+  <div class="sec-line"></div>
+  <div class="contact-wrap">
+    <div class="form-row">
+      <label for="nama">Nama</label>
+      <input type="text" id="nama" placeholder="Nama lengkap kamu"/>
+      <div class="err" id="e-nama">Nama tidak boleh kosong.</div>
+    </div>
+    <div class="form-row">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="contoh@email.com"/>
+      <div class="err" id="e-email">Format email tidak valid.</div>
+    </div>
+    <div class="form-row">
+      <label for="pesan">Pesan</label>
+      <textarea id="pesan" placeholder="Tulis pesan kamu di sini..."></textarea>
+      <div class="err" id="e-pesan">Pesan tidak boleh kosong.</div>
+    </div>
+    <button class="btn-submit" onclick="kirim()">Kirim Pesan</button>
+    <div class="success" id="suksesMsg">Pesan kamu berhasil dikirim! Kami akan segera menghubungi kamu.</div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Warung Nusantara &nbsp;·&nbsp; Jl. Rempah No. 7, Bandung</p>
+  <p style="margin-top:5px"><span>Dibuat untuk tugas Pemrograman Web Kelas X RPL</span></p>
+</footer>
+
+<script>
+  // 1. DARK MODE TOGGLE
+  const btn = document.getElementById('darkBtn');
+  if (localStorage.getItem('tema') === 'gelap') {
+    document.body.classList.add('dark');
+    btn.textContent = 'Mode Terang';
+  }
+  btn.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    const gelap = document.body.classList.contains('dark');
+    btn.textContent = gelap ? 'Mode Terang' : 'Mode Gelap';
+    localStorage.setItem('tema', gelap ? 'gelap' : 'terang');
+  });
+
+  // 2. SMOOTH SCROLL + NAVBAR AKTIF
+  const secs = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let aktif = '';
+    secs.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 70) aktif = s.id;
+    });
+    links.forEach(l => {
+      l.classList.remove('active');
+      if (l.getAttribute('href') === '#' + aktif) l.classList.add('active');
+    });
+  });
+
+  // 3. FORM VALIDASI
+  function kirim() {
+    const nama  = document.getElementById('nama');
+    const email = document.getElementById('email');
+    const pesan = document.getElementById('pesan');
+    const sukses = document.getElementById('suksesMsg');
+    let ok = true;
+
+    [nama, email, pesan].forEach(el => el.classList.remove('input-err'));
+    document.querySelectorAll('.err').forEach(e => e.style.display = 'none');
+    sukses.style.display = 'none';
+
+    if (!nama.value.trim()) {
+      nama.classList.add('input-err');
+      document.getElementById('e-nama').style.display = 'block';
+      ok = false;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+      email.classList.add('input-err');
+      document.getElementById('e-email').style.display = 'block';
+      ok = false;
+    }
+    if (!pesan.value.trim()) {
+      pesan.classList.add('input-err');
+      document.getElementById('e-pesan').style.display = 'block';
+      ok = false;
+    }
+
+    if (ok) {
+      sukses.style.display = 'block';
+      nama.value = email.value = pesan.value = '';
+    }
+  }
+</script>
+</body>
+</html>
